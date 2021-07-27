@@ -20,6 +20,7 @@ class AuthController extends Controller
             "login",
             "register",
             "profile",
+            "logout",
         ]);
     }
 
@@ -71,4 +72,13 @@ class AuthController extends Controller
     {
         return new UserResource(auth('api')->user());
     }
+
+    public function logout() {
+        if (Auth::check()) {
+            Auth::user()->AauthAcessToken()->delete();
+        }
+        return response()->json('Successfully logged out');
+    }
+
+
 }
