@@ -23,9 +23,11 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|max:55",
-            "email" => "required|unique:users|email:rfc,dns",
-            "password" => "required|min:6|confirmed",
+            'name' => 'required|max:55',
+            'email' => 'required|unique:users|email:rfc,dns',
+            'password' => 'required|min:6|confirmed',
+            'mobile' => 'required|unique:users|max:10',
+            'role' => 'required',
         ];
     }
 }

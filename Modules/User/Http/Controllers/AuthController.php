@@ -82,4 +82,8 @@ class AuthController extends Controller
         }
         return response()->json('Successfully logged out');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/yasindu
