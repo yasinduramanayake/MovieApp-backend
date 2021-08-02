@@ -45,7 +45,6 @@ class UserController extends Controller
     {
         return view('user::show');
     }
-
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -55,6 +54,8 @@ class UserController extends Controller
     {
         return view('user::edit');
     }
+
+
 
     /**
      * Update the specified resource in storage.
