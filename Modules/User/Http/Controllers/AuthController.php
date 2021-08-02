@@ -16,11 +16,11 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(["auth:api-system-user"])->except([
-            "login",
-            "register",
-            "profile",
-            "logout",
+        $this->middleware(['auth:api-system-user'])->except([
+            'login',
+            'register',
+            'profile',
+            'logout',
         ]);
     }
 
@@ -32,13 +32,13 @@ class AuthController extends Controller
     public function register(UserRegisterRequest $request)
     {
         $data = $request->validated();
-        $data["password"] = bcrypt($data["password"]);
+        $data['password'] = bcrypt($data['password']);
 
         $user = User::create($data);
 
         return response([
-            "data" => $user,
-            "token" => $user->createToken("api-system-user")->accessToken,
+            'data' => $user,
+            'token' => $user->createToken('api-system-user')->accessToken,
         ]);
     }
 
@@ -51,15 +51,15 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->validated())) {
             throw ValidationException::withMessages([
-                "login" => "Invalid Credentials",
+                'login' => 'Invalid Credentials',
             ]);
         }
 
         return response([
-            "data" => auth()->user(),
-            "token" => auth()
+            'data' => auth()->user(),
+            'token' => auth()
                 ->user()
-                ->createToken("api-system-user")->accessToken,
+                ->createToken('api-system-user')->accessToken,
         ]);
     }
     /**
@@ -73,12 +73,13 @@ class AuthController extends Controller
         return new UserResource(auth('api')->user());
     }
 
-    public function logout() {
+    public function logout()
+    {
         if (Auth::check()) {
-            Auth::user()->AauthAcessToken()->delete();
+            Auth::user()
+                ->AauthAcessToken()
+                ->delete();
         }
         return response()->json('Successfully logged out');
     }
-
-
 }
