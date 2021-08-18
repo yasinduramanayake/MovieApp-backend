@@ -1,0 +1,13 @@
+{
+    "name": "Theater",
+    "alias": "theater",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Theater\\Providers\\TheaterServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
