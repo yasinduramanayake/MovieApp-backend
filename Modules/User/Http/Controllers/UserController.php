@@ -4,77 +4,87 @@ namespace Modules\User\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
+use Modules\User\Entities\User;
+use Modules\User\Http\Resources\UserResourceCollection;
+use Modules\User\Http\Requests\UserRegisterRequest;
+use Modules\User\Http\Requests\Userupdaterequest;
+use Spatie\QueryBuilder\QueryBuilder;
+use Modules\User\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function __construct()
     {
-        return view('user::index');
+        $this->middleware(['auth:api-system-user'])->except([
+            'index',
+            'store',
+            'update',
+            'destroy',
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     *   * @return UserResourceCollection
+     * @return ResponseFactory|Response
      */
-    public function create()
+    public function index(Request $request)
     {
-        return view('user::create');
+        return response()->json([
+            'data' => UserResourceCollection::make(
+                QueryBuilder::for(User::class)
+                    ->defaultSort('-id')
+                    ->allowedFilters(['name', 'email', 'mobile', 'role'])
+                    ->allowedSorts(['name', 'email', 'mobile', 'role'])
+                    ->paginate($request->input('per_page', 10))
+            ),
+        ]);
+    }
+    /**
+     * @param UserRegisterRequest $request
+     * @return ResponseFactory|Response
+     */
+    public function store(UserRegisterRequest $request)
+    {
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['password']);
+
+        $userdata = User::create($data);
+
+        return response([
+            'data' => $userdata,
+            'token' => $userdata->createToken('api-system-user')->accessToken,
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
+     * @return UserResource
+     * @return ResponseFactory|Response
      */
-    public function store(Request $request)
+    public function show(User $user)
     {
-        //
+        return response()->json(['success' => UserResource::make($user)]);
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
+     * @return ResponseFactory|Response
+     * @param Userupdaterequest $request
      */
-    public function show($id)
+    public function update(Userupdaterequest $request, User $id)
     {
-        return view('user::show');
-    }
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('user::edit');
-    }
-
-
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $data = $request->validated();
+        $id->update($data);
+        return response()->json(['data' => $id]);
     }
 
     /**
      * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
+     *   * @return User
      */
-    public function destroy($id)
+    public function destroy(User $id)
     {
-        //
+        return response()->json(['successfully deleted' => $id->delete()]);
     }
 }
