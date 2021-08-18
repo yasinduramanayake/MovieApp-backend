@@ -9,10 +9,7 @@ class movie extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-
-        
-    ];
+    protected $fillable = ['movie_name','description','theater','movie_type' ];
     
     protected static function newFactory()
     {
