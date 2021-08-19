@@ -2,5 +2,6 @@
     "User": true,
     "Theater": true,
     "Movie": true,
-    "Booking": true
+    "Booking": true,
+    "Payment": true
 }

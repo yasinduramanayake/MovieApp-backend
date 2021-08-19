@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Booking\Http\Controllers\BookingController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/booking', function (Request $request) {
     return $request->user();
 });
+
+Route::post('addbooking', [BookingController::class, 'store']);
+Route::get('getbookings', [BookingController::class, 'index']);
+Route::put('updatebooking/{id}', [BookingController::class, 'update']);
+Route::delete('deletebooking/{id}', [BookingController::class, 'destroy']);

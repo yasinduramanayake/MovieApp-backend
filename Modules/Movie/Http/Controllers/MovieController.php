@@ -2,38 +2,59 @@
 
 namespace Modules\Movie\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
+use Modules\Movie\Entities\Movie;
+use Modules\Movie\Http\Resources\MovieResourceCollection;
+use Modules\Movie\Http\Requests\AddMovieRequest;
+use Modules\Movie\Http\Requests\UpdateMovierequest;
+use Spatie\QueryBuilder\QueryBuilder;
+use Modules\Movie\Http\Resources\MovieResource;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function __construct()
     {
-        return view('movie::index');
+        $this->middleware(['auth:api-system-user'])->except([
+            'index',
+            'store',
+            'update',
+            'destroy',
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     *   * @return MovieResourceCollection
+     * @return ResponseFactory|Response
      */
-    public function create()
+    public function index(Request $request)
     {
-        return view('movie::create');
+        return response()->json([
+            'data' => MovieResourceCollection::make(
+                QueryBuilder::for(Movie::class)
+                    ->defaultSort('-id')
+                    ->allowedFilters(['name', 'type'])
+                    ->allowedSorts(['name', 'type'])
+                    ->paginate($request->input('per_page', 10))
+            ),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
+     * @param AddMovieRequest $request
+     * @return ResponseFactory|Response
      */
-    public function store(Request $request)
+    public function store(AddMovieRequest $request)
     {
-        //
+        $data = $request->validated();
+        $moviedata = Movie::create($data);
+
+        return response()->json([
+            'data' => $moviedata,
+        ]);
     }
 
     /**
@@ -58,22 +79,24 @@ class MovieController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param UpdateMovieRequest $request
      * @param int $id
-     * @return Renderable
+     *      * @return ResponseFactory|Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMovieRequest $request, Movie $id)
     {
-        //
+        $data = $request->validated();
+        $id->update($data);
+        return response()->json(['data' => $id]);
     }
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
+     *      * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(Movie $id)
     {
-        //
+        return response()->json(['successfully deleted' => $id->delete()]);
     }
 }

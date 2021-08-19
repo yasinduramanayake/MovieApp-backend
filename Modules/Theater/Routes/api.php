@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\Theater\Http\Controllers\TheaterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/theater', function (Request $request) {
     return $request->user();
 });
+
+Route::post('addtheater', [TheaterController::class, 'store']);
+Route::get('gettheaters', [TheaterController::class, 'index']);
+Route::put('updatetheater/{id}', [TheaterController::class, 'update']);
+Route::delete('deletetheater/{id}', [TheaterController::class, 'destroy']);

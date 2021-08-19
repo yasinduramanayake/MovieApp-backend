@@ -4,36 +4,59 @@ namespace Modules\Theater\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
+use Modules\Theater\Entities\Theater;
+use Modules\Theater\Http\Resources\TheaterResourceCollection;
+use Modules\Theater\Http\Requests\AddTheaterRequest;
+use Modules\Theater\Http\Requests\UpdateTheaterRequest;
+use Spatie\QueryBuilder\QueryBuilder;
+use Modules\Theater\Http\Resources\TheaterResource;
 
 class TheaterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function __construct()
     {
-        return view('theater::index');
+        $this->middleware(['auth:api-system-user'])->except([
+            'index',
+            'store',
+            'update',
+            'destroy',
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     *   * @return TheaterResourceCollection
+     * @return ResponseFactory|Response
      */
-    public function create()
+    public function index(Request $request)
     {
-        return view('theater::create');
+        return response()->json([
+            'data' => TheaterResourceCollection::make(
+                QueryBuilder::for(Theater::class)
+                    ->defaultSort('-id')
+                    ->allowedFilters(['name', 'type', 'venue'])
+                    ->allowedSorts(['name', 'type', 'venue'])
+                    ->paginate($request->input('per_page', 10))
+            ),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
+     * @param AddTheaterRequest $request
+     * @return ResponseFactory|Response
      */
-    public function store(Request $request)
+    public function store(AddTheaterRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $theaterdata = Theater::create($data);
+
+        return response([
+            'data' => $theaterdata,
+        ]);
     }
 
     /**
@@ -58,22 +81,24 @@ class TheaterController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param UpdateTheaterRequest $request
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTheaterRequest $request, Theater $id)
     {
-        //
+        $data = $request->validated();
+        $id->update($data);
+        return response()->json(['data' => $id]);
     }
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
+
      */
-    public function destroy($id)
+    public function destroy(Theater $id)
     {
-        //
+        return response()->json(['successfully deleted' => $id->delete()]);
     }
 }
