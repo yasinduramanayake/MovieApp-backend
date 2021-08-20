@@ -36,9 +36,10 @@ class TheaterController extends Controller
             'data' => TheaterResourceCollection::make(
                 QueryBuilder::for(Theater::class)
                     ->defaultSort('-id')
-                    ->allowedFilters(['name', 'type', 'venue'])
+                    ->allowedFilters(['name'])
                     ->allowedSorts(['name', 'type', 'venue'])
-                    ->paginate($request->input('per_page', 10))
+                    ->paginate()
+                    ->appends(request()->query())
             ),
         ]);
     }

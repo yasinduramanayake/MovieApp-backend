@@ -12,6 +12,7 @@ use Modules\Movie\Http\Requests\AddMovieRequest;
 use Modules\Movie\Http\Requests\UpdateMovierequest;
 use Spatie\QueryBuilder\QueryBuilder;
 use Modules\Movie\Http\Resources\MovieResource;
+use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
@@ -22,6 +23,7 @@ class MovieController extends Controller
             'store',
             'update',
             'destroy',
+            'show',
         ]);
     }
 
@@ -34,10 +36,10 @@ class MovieController extends Controller
         return response()->json([
             'data' => MovieResourceCollection::make(
                 QueryBuilder::for(Movie::class)
-                    ->defaultSort('-id')
-                    ->allowedFilters(['name', 'type'])
-                    ->allowedSorts(['name', 'type'])
-                    ->paginate($request->input('per_page', 10))
+                    ->allowedFilters(['type'])
+                    ->allowedSorts(['type'])
+                    ->paginate()
+                    ->appends(request()->query())
             ),
         ]);
     }
@@ -55,26 +57,6 @@ class MovieController extends Controller
         return response()->json([
             'data' => $moviedata,
         ]);
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('movie::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('movie::edit');
     }
 
     /**

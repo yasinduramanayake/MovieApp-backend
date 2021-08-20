@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Route;
+use Modules\Payment\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,3 +17,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/payment', function (Request $request) {
     return $request->user();
 });
+
+Route::post('addpayment', [PaymentController::class, 'store']);
+Route::get('getpayments', [TheaPaymentController::class, 'index']);
+Route::put('updatepayment/{id}', [PaymentController::class, 'update']);
+Route::delete('deletepayment/{id}', [PaymentController::class, 'destroy']);

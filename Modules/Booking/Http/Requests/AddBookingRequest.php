@@ -25,13 +25,12 @@ class AddBookingRequest extends FormRequest
         return [
             'movie_name' => 'required|max:55',
             'movie_type' => 'required',
-            'thater_name' => 'required',
+            'theater_name' => 'required',
             'theater_type' => 'required',
             'showtime' => 'required',
-            'price' => 'required|double',
-            'image' => 'required',
-            'full_name' => 'required|max:55|unique:bookings,full_name',
-            'email' => 'required|max:55|unique:bookings,email',
+            'price' => 'required',
+            'full_name' => 'required|max:55',
+            'email' => 'required|max:55',
             'seats' => 'required|integer',
         ];
     }

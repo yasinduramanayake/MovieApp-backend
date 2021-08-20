@@ -23,3 +23,4 @@ Route::post('addmovie', [MovieController::class, 'store']);
 Route::get('getmovies', [MovieController::class, 'index']);
 Route::put('updatemovie/{id}', [MovieController::class, 'update']);
 Route::delete('deletemovie/{id}', [MovieController::class, 'destroy']);
+Route::get('showmovie/{id}', [MovieController::class, 'show']);

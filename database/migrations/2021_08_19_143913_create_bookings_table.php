@@ -25,7 +25,7 @@ class CreateBookingsTable extends Migration
             $table->integer('seats');
             $table->double('price');
             $table->string('showtime');
-            $table->longText('image');
+            $table->longText('image')->nullable();
 
             $table->timestamps();
         });
