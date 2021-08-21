@@ -27,7 +27,7 @@ class AddMovieRequest extends FormRequest
             'type' => 'required',
             'image' => 'required',
             'description' => 'max:5000',
-            'theaters' => 'nullable|array',
+            'theaters' => 'required|array',
         ];
     }
 }

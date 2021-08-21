@@ -36,15 +36,13 @@ class BookingController extends Controller
             'data' => BookingResourceCollection::make(
                 QueryBuilder::for(Booking::class)
                     ->defaultSort('-id')
-                    ->allowedFilters([
-                        'movie_name',
-                        'theater_name,theater_type,movie_type,full_name,email',
-                    ])
+                    ->allowedFilters(['movie_name', 'full_name'])
                     ->allowedSorts([
                         'movie_name',
                         'theater_name,theater_type,movie_type,full_name,email',
                     ])
-                    ->paginate($request->input('per_page', 10))
+                    ->paginate()
+                    ->appends(request()->query())
             ),
         ]);
     }

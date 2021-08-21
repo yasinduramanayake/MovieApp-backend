@@ -19,6 +19,6 @@ Route::middleware('auth:api')->get('/payment', function (Request $request) {
 });
 
 Route::post('addpayment', [PaymentController::class, 'store']);
-Route::get('getpayments', [TheaPaymentController::class, 'index']);
+Route::get('getpayments', [PaymentController::class, 'index']);
 Route::put('updatepayment/{id}', [PaymentController::class, 'update']);
 Route::delete('deletepayment/{id}', [PaymentController::class, 'destroy']);
