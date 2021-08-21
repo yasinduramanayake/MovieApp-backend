@@ -1,4 +1,6 @@
 {
     "User": true,
-    "Movie": true
+    "Theater": true,
+    "Movie": true,
+    "Booking": true
 }

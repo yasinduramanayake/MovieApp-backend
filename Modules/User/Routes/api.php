@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\User\Http\Controllers\AuthController;
+use Modules\User\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,17 @@ use Modules\User\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware("auth:api")->get("/users", function (Request $request) {
+Route::middleware('auth:api')->get('/users', function (Request $request) {
     return $request->user();
 });
 
-Route::post("register", [AuthController::class, "register"]);
-Route::post("login", [AuthController::class, "login"]);
-Route::get("profile", [AuthController::class, "profile"]);
-Route::get("logout", [AuthController::class, "logout"]);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::get('profile', [AuthController::class, 'profile']);
+Route::get('logout', [AuthController::class, 'logout']);
+
+// User controller
+Route::post('adduser', [UserController::class, 'store']);
+Route::get('getusers', [UserController::class, 'index']);
+Route::put('updateuser/{id}', [UserController::class, 'update']);
+Route::delete('deleteuser/{id}', [UserController::class, 'destroy']);
