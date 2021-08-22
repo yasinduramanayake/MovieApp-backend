@@ -13,6 +13,7 @@ use Modules\Movie\Http\Requests\UpdateMovierequest;
 use Spatie\QueryBuilder\QueryBuilder;
 use Modules\Movie\Http\Resources\MovieResource;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class MovieController extends Controller
 {

@@ -26,7 +26,7 @@ class UpdateMovieRequest extends FormRequest
             'name' => 'required|max:55',
             'type' => 'required',
             'image' => 'required',
-            'theaters' => 'nullable|array',
+            'theaters' => 'required|array',
             'description' => 'max:5000',
         ];
     }

@@ -59,5 +59,8 @@ class Theater extends Model
 
     protected $casts = [
         'movies' => 'array',
+        'time1' => 'datetime',
+        'time2' => 'datetime',
+        'time3' => 'datetime',
     ];
 }

@@ -34,7 +34,7 @@ class PaymentController extends Controller
             'data' => PaymentResourceCollection::make(
                 QueryBuilder::for(Payment::class)
                     ->defaultSort('-id')
-                    ->allowedFilters(['name'])
+                    ->allowedFilters(['email'])
                     ->allowedSorts(['name', 'cardnumber', 'cvv'])
                     ->paginate()
                     ->appends(request()->query())
