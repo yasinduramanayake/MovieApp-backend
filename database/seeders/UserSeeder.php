@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\User\Entities\User;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserSeeder extends Seeder
 {
@@ -21,7 +23,5 @@ class UserSeeder extends Seeder
             'mobile' => '0713790125',
             'role' => 'Admin',
         ]);
-
-        
     }
 }
