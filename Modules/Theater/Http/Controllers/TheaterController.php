@@ -12,7 +12,6 @@ use Modules\Theater\Http\Resources\TheaterResourceCollection;
 use Modules\Theater\Http\Requests\AddTheaterRequest;
 use Modules\Theater\Http\Requests\UpdateTheaterRequest;
 use Spatie\QueryBuilder\QueryBuilder;
-use Modules\Theater\Http\Resources\TheaterResource;
 
 class TheaterController extends Controller
 {

@@ -21,5 +21,7 @@ class UserSeeder extends Seeder
             'mobile' => '0713790125',
             'role' => 'Admin',
         ]);
+
+        
     }
 }
