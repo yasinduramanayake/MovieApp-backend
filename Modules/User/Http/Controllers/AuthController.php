@@ -60,6 +60,7 @@ class AuthController extends Controller
             'token' => auth()
                 ->user()
                 ->createToken('api-system-user')->accessToken,
+                ->
         ]);
     }
     /**
