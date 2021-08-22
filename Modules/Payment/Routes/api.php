@@ -2,8 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Modules\Theater\Http\Controllers\TheaterController;
-
+use Modules\Payment\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,11 +14,11 @@ use Modules\Theater\Http\Controllers\TheaterController;
 |
 */
 
-Route::middleware('auth:api')->get('/theater', function (Request $request) {
+Route::middleware('auth:api')->get('/payment', function (Request $request) {
     return $request->user();
 });
 
-Route::post('addtheater', [TheaterController::class, 'store']);
-Route::get('gettheaters', [TheaterController::class, 'index']);
-Route::put('updatetheater/{id}', [TheaterController::class, 'update']);
-Route::delete('deletetheater/{id}', [TheaterController::class, 'destroy']);
+Route::post('addpayment', [PaymentController::class, 'store']);
+Route::get('getpayments', [TheaPaymentController::class, 'index']);
+Route::put('updatepayment/{id}', [PaymentController::class, 'update']);
+Route::delete('deletepayment/{id}', [PaymentController::class, 'destroy']);

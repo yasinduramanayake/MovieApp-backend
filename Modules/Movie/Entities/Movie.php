@@ -2,17 +2,16 @@
 
 namespace Modules\Movie\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class movie extends Model
+class Movie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['movie_name','description','theater','movie_type' ];
-    
-    protected static function newFactory()
-    {
-        return \Modules\Movie\Database\factories\MovieFactory::new();
-    }
+    protected $fillable = ['name','description','theaters','type','image'];
+
+    protected $casts = [
+        'theaters' => 'array',
+    ];
 }

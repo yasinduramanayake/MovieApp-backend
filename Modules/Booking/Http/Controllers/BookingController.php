@@ -2,38 +2,66 @@
 
 namespace Modules\Booking\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
+use Modules\Booking\Entities\Booking;
+use Modules\Booking\Http\Resources\BookingResourceCollection;
+use Modules\Booking\Http\Requests\AddBookingRequest;
+use Modules\Booking\Http\Requests\UpdateBookingRequest;
+use Spatie\QueryBuilder\QueryBuilder;
+use Modules\Booking\Http\Resources\BookingResource;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+    public function __construct()
     {
-        return view('booking::index');
+        $this->middleware(['auth:api-system-user'])->except([
+            'index',
+            'store',
+            'update',
+            'destroy',
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     *   * @return BookingResourceCollection
+     * @return ResponseFactory|Response
      */
-    public function create()
+    public function index(Request $request)
     {
-        return view('booking::create');
+        return response()->json([
+            'data' => BookingResourceCollection::make(
+                QueryBuilder::for(Booking::class)
+                    ->defaultSort('-id')
+                    ->allowedFilters([
+                        'movie_name',
+                        'theater_name,theater_type,movie_type,full_name,email',
+                    ])
+                    ->allowedSorts([
+                        'movie_name',
+                        'theater_name,theater_type,movie_type,full_name,email',
+                    ])
+                    ->paginate($request->input('per_page', 10))
+            ),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
+     * @param AddBookingRequest $request
+     * @return ResponseFactory|Response
      */
-    public function store(Request $request)
+    public function store(AddBookingRequest $request)
     {
-        //
+        $data = $request->validated();
+        $bookingdata = Booking::create($data);
+
+        return response()->json([
+            'data' => $bookingdata,
+        ]);
     }
 
     /**
@@ -47,33 +75,28 @@ class BookingController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('booking::edit');
-    }
-
-    /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param UpdateBookingRequest $request
      * @param int $id
-     * @return Renderable
+     *   @return ResponseFactory|Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookingRequest $request, Booking $id)
     {
-        //
+        $data = $request->validated();
+        $id->update($data);
+
+        return response()->json([
+            'data' => $id,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @return Renderable
+     * @return ResponseFactory|Response
      */
-    public function destroy($id)
+    public function destroy(Booking $id)
     {
-        //
+        return response()->json(['successfully deleted' => $id->delete()]);
     }
 }

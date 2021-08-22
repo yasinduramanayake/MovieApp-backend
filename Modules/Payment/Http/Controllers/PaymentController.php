@@ -1,20 +1,19 @@
 <?php
 
-namespace Modules\Theater\Http\Controllers;
+namespace Modules\Payment\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Response;
-use Modules\Theater\Entities\Theater;
-use Modules\Theater\Http\Resources\TheaterResourceCollection;
-use Modules\Theater\Http\Requests\AddTheaterRequest;
-use Modules\Theater\Http\Requests\UpdateTheaterRequest;
+use Modules\Payment\Entities\Payment;
+use Modules\Payment\Http\Resources\PaymentResourceCollection;
+use Modules\Payment\Http\Requests\AddPaymentRequest;
+use Modules\Payment\Http\Requests\UpdatePaymentRequest;
 use Spatie\QueryBuilder\QueryBuilder;
-use Modules\Theater\Http\Resources\TheaterResource;
-
-class TheaterController extends Controller
+use Modules\Payment\Http\Resources\PaymentResource;
+class PaymentController extends Controller
 {
     public function __construct()
     {
@@ -25,19 +24,18 @@ class TheaterController extends Controller
             'destroy',
         ]);
     }
-
     /**
-     *   * @return TheaterResourceCollection
+     *   * @return PaymentResourceCollection
      * @return ResponseFactory|Response
      */
-    public function index(Request $request)
+    public function index()
     {
         return response()->json([
-            'data' => TheaterResourceCollection::make(
-                QueryBuilder::for(Theater::class)
+            'data' => PaymentResourceCollection::make(
+                QueryBuilder::for(Payment::class)
                     ->defaultSort('-id')
                     ->allowedFilters(['name'])
-                    ->allowedSorts(['name', 'type', 'venue'])
+                    ->allowedSorts(['name', 'cardnumber', 'cvv'])
                     ->paginate()
                     ->appends(request()->query())
             ),
@@ -46,17 +44,17 @@ class TheaterController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param AddTheaterRequest $request
+     * @param AddPaymentRequest $request
      * @return ResponseFactory|Response
      */
-    public function store(AddTheaterRequest $request)
+    public function store(AddPaymentRequest $request)
     {
         $data = $request->validated();
 
-        $theaterdata = Theater::create($data);
+        $paymentdata = Payment::create($data);
 
         return response([
-            'data' => $theaterdata,
+            'data' => $paymentdata,
         ]);
     }
 
@@ -67,7 +65,7 @@ class TheaterController extends Controller
      */
     public function show($id)
     {
-        return view('theater::show');
+        return view('payment::show');
     }
 
     /**
@@ -77,28 +75,27 @@ class TheaterController extends Controller
      */
     public function edit($id)
     {
-        return view('theater::edit');
+        return view('payment::edit');
     }
 
     /**
      * Update the specified resource in storage.
-     * @param UpdateTheaterRequest $request
+     * @param UpdatePaymentRequest $request
      * @param int $id
      * @return Renderable
      */
-    public function update(UpdateTheaterRequest $request, Theater $id)
+    public function update(UpdatePaymentRequest $request, Payment $id)
     {
         $data = $request->validated();
         $id->update($data);
         return response()->json(['data' => $id]);
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
-
+     * @return Renderable
      */
-    public function destroy(Theater $id)
+    public function destroy(Payment $id)
     {
         return response()->json(['successfully deleted' => $id->delete()]);
     }
