@@ -19,9 +19,9 @@ class CreateTheatersTable extends Migration
             $table->string('type');
             $table->string('venue');
             $table->json('movies')->nullable();
-            $table->string('time1')->nullable();
-            $table->string('time2')->nullable();
-            $table->string('time3')->nullable();
+            $table->timestamp('time1')->nullable();
+            $table->timestamp('time2')->nullable();
+            $table->timestamp('time3')->nullable();
             $table->longText('image');
             $table->string('description');
             $table->timestamps();
