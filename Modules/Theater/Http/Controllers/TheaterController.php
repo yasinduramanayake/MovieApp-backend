@@ -32,14 +32,10 @@ class TheaterController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'data' => TheaterResourceCollection::make(
-                QueryBuilder::for(Theater::class)
-                    ->defaultSort('-id')
-                    ->allowedFilters(['name'])
-                    ->allowedSorts(['name', 'type', 'venue'])
-                    ->paginate()
-                    ->appends(request()->query())
-            ),
+            'data' => QueryBuilder::for(Theater::class)
+                ->allowedFilters(['name', 'venue'])
+                ->allowedSorts(['name', 'type', 'venue'])
+                ->paginate($request->query('per_page', 2)),
         ]);
     }
 
