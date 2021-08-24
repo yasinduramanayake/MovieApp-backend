@@ -57,4 +57,8 @@ class Booking extends Model
         'seats',
         'showtime',
     ];
+
+    protected $casts = [
+        'showtime' => 'datetime',
+    ];
 }

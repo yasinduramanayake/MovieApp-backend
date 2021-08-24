@@ -13,7 +13,6 @@ use Modules\Movie\Http\Requests\UpdateMovierequest;
 use Spatie\QueryBuilder\QueryBuilder;
 use Modules\Movie\Http\Resources\MovieResource;
 use Illuminate\Support\Facades\DB;
-use Spatie\QueryBuilder\AllowedFilter;
 
 class MovieController extends Controller
 {
@@ -35,13 +34,10 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'data' => MovieResourceCollection::make(
-                QueryBuilder::for(Movie::class)
-                    ->allowedFilters(['type'])
-                    ->allowedSorts(['type'])
-                    ->paginate()
-                    ->appends(request()->query())
-            ),
+            'data' => QueryBuilder::for(Movie::class)
+                ->allowedFilters(['type', 'name'])
+                ->allowedSorts(['type'])
+                ->paginate($request->query('per_page', 2)),
         ]);
     }
 
