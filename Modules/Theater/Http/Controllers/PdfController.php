@@ -21,6 +21,9 @@ class PdfController extends Controller
         //     'title' => 'Welcome to ItSolutionStuff.com',
         // ];
 
+        //yasindu
+
+
         $pdf = PDF::loadView('PDF', compact('data'));
         return $pdf->save('D:\theaters.pdf');
     }
