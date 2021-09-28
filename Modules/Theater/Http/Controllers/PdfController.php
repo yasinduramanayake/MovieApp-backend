@@ -2,6 +2,7 @@
 
 namespace Modules\Theater\Http\Controllers;
 use PDF;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\Theater\Entities\Theater;
@@ -14,17 +15,22 @@ class PdfController extends Controller
         $this->middleware(['auth:api-system-user'])->except(['generatePDF']);
     }
 
-    public function generatePDF()
+    public function generatePDF(Request $request)
     {
         $data = Theater::all();
         // $data = [
         //     'title' => 'Welcome to ItSolutionStuff.com',
         // ];
-
-        //yasindu
-
-
+    
+       
+    
+           $input = $request->input('text');
+            
+           
+    
         $pdf = PDF::loadView('PDF', compact('data'));
-        return $pdf->save('D:\theaters.pdf');
+        
+        return $pdf->save($input . '\theater.pdf');
+        
     }
 }
