@@ -23,3 +23,7 @@ Route::post('addbooking', [BookingController::class, 'store']);
 Route::get('getbookings', [BookingController::class, 'index']);
 Route::put('updatebooking/{id}', [BookingController::class, 'update']);
 Route::delete('deletebooking/{id}', [BookingController::class, 'destroy']);
+
+// PDF Genaration
+
+Route::post('genaratereport', [PdfController::class, 'generatePDF']);
