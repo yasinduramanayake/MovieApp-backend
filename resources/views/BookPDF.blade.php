@@ -35,9 +35,6 @@
                 <td>{{$bookings->price}}</td>
                 <td>{{$bookings->full_name}}</td>
                 <td>{{$bookings->email}}</td>
-                @foreach($bookings->bookings as $tbookings)
-                <td>{{$tbookings}}</td>
-                @endforeach
             </tr>
             @endforeach
         </tbody>

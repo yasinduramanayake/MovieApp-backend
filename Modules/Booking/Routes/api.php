@@ -27,4 +27,4 @@ Route::delete('deletebooking/{id}', [BookingController::class, 'destroy']);
 
 // PDF Genaration
 
-Route::get('genaratereport', [PdfController::class, 'generatePDF']);
+Route::post('genBookingPDF', [PdfController::class, 'BookingPDF']);

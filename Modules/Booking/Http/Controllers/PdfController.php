@@ -11,15 +11,15 @@ class PdfController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:api-system-user'])->except(['generatePDF']);
+        $this->middleware(['auth:api-system-user'])->except(['BookingPDF']);
     }
 
-    public function generatePDF()
+    public function BookingPDF()
     {
         $data = Booking::all();
 
 
         $pdf = PDF ::loadView('BookPDF', compact('data'));
-        return $pdf->save('C:\bookings.pdf');
+        return $pdf->save('booking.pdf');
     }
 }
