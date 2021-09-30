@@ -28,9 +28,6 @@
                 <td>{{$theaters->venue}}</td>
                 <td>{{$theaters->time1}}</td>
                 <td>{{$theaters->time2}}</td>
-                @foreach($theaters->movies as $tmovies)
-                <td>{{$tmovies}}</td>
-                @endforeach
             </tr>
             @endforeach
         </tbody>

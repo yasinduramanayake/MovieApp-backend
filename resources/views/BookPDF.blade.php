@@ -35,10 +35,11 @@
                 <td>{{$bookings->price}}</td>
                 <td>{{$bookings->full_name}}</td>
                 <td>{{$bookings->email}}</td>
-            </tr>
+                </tr>
             @endforeach
         </tbody>
     </table>
 </body>
-
-</html>
+     
+        
+     

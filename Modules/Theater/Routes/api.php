@@ -27,4 +27,4 @@ Route::delete('deletetheater/{id}', [TheaterController::class, 'destroy']);
 
 // PDF Genaration
 
-Route::get('genaratereport', [PdfController::class, 'generatePDF']);
+Route::post('genaratereport', [PdfController::class, 'generatePDF']);
