@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\Theater\Http\Controllers\TheaterController;
+use Modules\Theater\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,7 @@ Route::post('addtheater', [TheaterController::class, 'store']);
 Route::get('gettheaters', [TheaterController::class, 'index']);
 Route::put('updatetheater/{id}', [TheaterController::class, 'update']);
 Route::delete('deletetheater/{id}', [TheaterController::class, 'destroy']);
+
+// PDF Genaration
+
+Route::post('genaratereport', [PdfController::class, 'generatePDF']);

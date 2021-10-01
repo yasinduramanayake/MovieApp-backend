@@ -25,8 +25,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('profile', [AuthController::class, 'profile']);
 Route::get('logout', [AuthController::class, 'logout']);
 
+// sending email if fogot pasword
+Route::post('forgotpassword', [AuthController::class, 'forgot']);
+Route::post('resetpassword', [AuthController::class, 'reset']);
+
 // User controller
 Route::post('adduser', [UserController::class, 'store']);
 Route::get('getusers', [UserController::class, 'index']);
 Route::put('updateuser/{id}', [UserController::class, 'update']);
 Route::delete('deleteuser/{id}', [UserController::class, 'destroy']);
+
