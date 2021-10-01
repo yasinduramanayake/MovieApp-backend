@@ -16,6 +16,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        Excel::import(new UsersImport(), 'users.xlsx');
+        User::create([
+            'name' => 'Kamal Perera',
+            'email' => 'kamalperera123@gmail.com',
+            'password' => bcrypt('Kamal123#'),
+            'mobile' => '0713790125',
+            'role' => 'Admin',
+        ]);
     }
 }

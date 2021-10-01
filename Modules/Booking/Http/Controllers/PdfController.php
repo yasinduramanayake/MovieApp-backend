@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Theater\Http\Controllers;
+namespace Modules\Booking\Http\Controllers;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use Modules\Theater\Entities\Theater;
+use Modules\Booking\Entities\Booking;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PdfController extends Controller
@@ -17,10 +17,7 @@ class PdfController extends Controller
 
     public function generatePDF(Request $request)
     {
-        $data = Theater::all();
-        // $data = [
-        //     'title' => 'Welcome to ItSolutionStuff.com',
-        // ];
+        $data = Booking::all();
     
        
     
@@ -28,9 +25,9 @@ class PdfController extends Controller
             
            
     
-        $pdf = PDF::loadView('PDF', compact('data'));
+        $pdf = PDF::loadView('BookPDF', compact('data'));
         
-        return $pdf->save($input . '\theater.pdf');
+        return $pdf->save($input . '\booking.pdf');
         
     }
 }
