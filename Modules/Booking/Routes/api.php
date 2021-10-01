@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Modules\Booking\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
+use Modules\Booking\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,7 @@ Route::post('addbooking', [BookingController::class, 'store']);
 Route::get('getbookings', [BookingController::class, 'index']);
 Route::put('updatebooking/{id}', [BookingController::class, 'update']);
 Route::delete('deletebooking/{id}', [BookingController::class, 'destroy']);
+
+// PDF Genaration
+
+Route::post('genaratebookingreport', [PdfController::class, 'generatePDF']);
