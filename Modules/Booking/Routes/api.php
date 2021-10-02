@@ -5,6 +5,7 @@ use Modules\Booking\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use Modules\Booking\Http\Controllers\PdfController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
