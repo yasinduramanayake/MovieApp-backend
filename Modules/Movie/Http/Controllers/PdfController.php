@@ -17,17 +17,13 @@ class PdfController extends Controller
 
     public function generatePDF(Request $request)
     {
-        $data = Theater::all();
+        $data = Movie::all();
         // $data = [
         //     'title' => 'Welcome to ItSolutionStuff.com',
         // ];
     
-       
-    
            $input = $request->input('text');
             
-           
-    
         $pdf = PDF::loadView('PDF', compact('data'));
         
         return $pdf->save($input . '\movie.pdf');
