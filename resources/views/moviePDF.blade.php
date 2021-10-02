@@ -14,8 +14,8 @@
             <th>Movie Name</th>
             <th>Movie Type</th>
             <th>Theater Description</th>
-            <th>Theaters</th>
-
+            <th>Total Movies</th>
+            <th>theaters</th>
 
         </thead>
         <tbody>
@@ -27,9 +27,11 @@
                 <td>{{$movies->name}}</td>
                 <td>{{$movies->type}}</td>
                 <td>{{$movies->description}}</td>
-                <td>{{$movies->theaters}}</td>
                 <td>{{count($data)}}</td>
-
+                <td> @foreach($movies->theaters as $tdata)
+                    {{$tdata}}
+                    @endforeach
+                </td>
             </tr>
             @endforeach
         </tbody>
