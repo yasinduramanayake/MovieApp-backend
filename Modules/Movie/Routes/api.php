@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\Movie\Http\Controllers\MovieController;
+use Modules\Movie\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,6 @@ Route::get('getmovies', [MovieController::class, 'index']);
 Route::put('updatemovie/{id}', [MovieController::class, 'update']);
 Route::delete('deletemovie/{id}', [MovieController::class, 'destroy']);
 Route::get('showmovie/{id}', [MovieController::class, 'show']);
+
+//report generate route
+Route::post('generatemoviereport', [PdfController::class, 'generatePDF']);

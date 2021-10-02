@@ -90,17 +90,17 @@ class AuthController extends Controller
 
     public function forgot(Request  $request)
     {
-        $data  = $request ->input('email');
-        
-        $users=User::where('email',$data)->first();
-        $randomId = rand(1279234,973480000);
-        $users->password =  $randomId ;
+        $data  = $request->input('email');
+
+        $users = User::where('email', $data)->first();
+        $randomId = rand(1279234, 973480000);
+        $users->password =  $randomId;
         $users->save();
         $contain = [
             'code' =>  $randomId,
-            'email' =>   $data 
+            'email' =>   $data
         ];
-    
+
         Mail::to($data)->send(new UserMail($contain));
 
         return 'A message has been sent to Mailtrap!';
@@ -108,16 +108,16 @@ class AuthController extends Controller
 
     public function reset(Request  $request)
     {
-        $code = $request ->input('code');
-        $cpassword  = $request ->validate(['password' => 'required|min:6|confirmed']);
-        
-        
-        $users=User::where('password',$code)->first();
+        $code = $request->input('code');
+        $cpassword  = $request->validate(['password' => 'required|min:6|confirmed']);
+
+
+        $users = User::where('password', $code)->first();
         $users->password = bcrypt($cpassword['password']);
         $users->save();
-        
+
         return response([
             'data' => $users,
-        ]);    
+        ]);
     }
 }

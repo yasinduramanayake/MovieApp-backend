@@ -34,4 +34,3 @@ Route::post('adduser', [UserController::class, 'store']);
 Route::get('getusers', [UserController::class, 'index']);
 Route::put('updateuser/{id}', [UserController::class, 'update']);
 Route::delete('deleteuser/{id}', [UserController::class, 'destroy']);
-
