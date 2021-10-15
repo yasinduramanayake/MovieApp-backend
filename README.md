@@ -35,7 +35,7 @@ SonarQube for continuous inspection of code quality, and Selenium for testing th
 * Get Tables
    * run `.php artisan migrate`
 * Get default/initial/dummy table values
-   * run `.php artisan db:seed`
+   * run `.php artisan db:seed --class=UserSeeder`
 
 to Run the project\
    * `php artisan serve`
